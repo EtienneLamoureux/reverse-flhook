@@ -2,8 +2,8 @@ package com.etiennelamoureux.reverseflhook.jump;
 
 import com.etiennelamoureux.reverseflhook.utils.Constants;
 import com.etiennelamoureux.reverseflhook.utils.HexUtil;
+import com.etiennelamoureux.reverseflhook.utils.TimeUtil;
 import java.nio.ByteBuffer;
-import java.util.Arrays;
 
 /**
  * Builds a realistic hyperspace coordinates string to be used after the <code>/setcoords/<code>
@@ -24,19 +24,18 @@ public class HyperspaceCoordinates {
   private float accuracy;
 
   public HyperspaceCoordinates(int system, Coordinates coordinates) {
-    this.seed = 0;// (short) (Math.random() * Short.MAX_VALUE);
+    this.seed = (short) (Math.random() * Short.MAX_VALUE);
     this.system = system;
     this.coordinates = coordinates;
-    this.time = 0; // TimeUtil.secondsFrom1970() - TimeUtil.upTo1WeekInSeconds() +
-                   // Constants.HYPERSPACE_COORDINATES_LIFETIME;
+    this.time = TimeUtil.secondsFrom1970() - TimeUtil.upTo1WeekInSeconds()
+        + Constants.HYPERSPACE_COORDINATES_LIFETIME;
     this.accuracy = Constants.SURVEY_MK3_ACCURACY;
     this.parity = calculateParity();
   }
 
   HyperspaceCoordinates(String string) {
     string = string.replace("-", "");
-    byte[] bytes = encrypt(HexUtil.hexStringToByteArray(string));
-    System.out.println(Arrays.toString(bytes));
+    byte[] bytes = encrypt(HexUtil.toByteArray(string));
 
     parity = ByteBuffer.wrap(new byte[] {bytes[0], bytes[1]}).getShort();
     seed = ByteBuffer.wrap(new byte[] {bytes[2], bytes[3]}).getShort();
@@ -66,9 +65,7 @@ public class HyperspaceCoordinates {
 
   @Override
   public String toString() {
-    byte[] bytes = getBytes();
-    System.out.println(Arrays.toString(bytes));
-    return format(encrypt(bytes));
+    return format(encrypt(getBytes()));
   }
 
   private String format(byte[] bytes) {
@@ -79,7 +76,7 @@ public class HyperspaceCoordinates {
         stringBuilder.append("-");
       }
 
-      stringBuilder.append(String.format("%02X", bytes[i]));
+      stringBuilder.append(HexUtil.toHexString(bytes[i]));
     }
 
     return stringBuilder.toString();
