@@ -11,7 +11,7 @@ public class HyperspaceCoordinatesTest {
   @Test
   public void whenGettingStringThenGetCorrectString() {
     HyperspaceCoordinates hyperspaceCoordinates =
-        new HyperspaceCoordinates(66125, new Coordinates(14315f, 165f, -2360f));
+        new HyperspaceCoordinates(196649, new Coordinates(14315f, 165f, -2360f));
     String hyperspaceCoordinatesString = hyperspaceCoordinates.toString();
 
     HyperspaceCoordinates parsedHyperspaceCoordinates =
