@@ -3,6 +3,7 @@ package com.etiennelamoureux.reverseflhook.utils;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
+import java.util.Collection;
 
 public class SecretBreaker {
   /**
@@ -14,7 +15,7 @@ public class SecretBreaker {
    * @param args
    */
   public static void main(String[] args) {
-    Arrays.asList(
+    Collection<Cipher> ciphers = Arrays.asList(
         new Cipher("5f026735-30f79688-319b6b76-e2504022-22b927a1-02662068-35337726", 14315, 165,
             -2360),
         new Cipher("ac003a2f-32d4aeea-b93b4ef3-46da3e74-ec587c73-d6b0e573-33697072", -62988, 9,
@@ -50,8 +51,10 @@ public class SecretBreaker {
         new Cipher("26ff9d44-b7409e9a-88e3e125-fa8fdbf4-14fae3f5-5c6b0954-38e59b72", 27244, -23,
             -28005),
         new Cipher("1ffff36f-b768ffaf-e0ad567d-7b4bf8ec-a44a83a7-6ad15755-2dfb9674", 3693, -19,
-            -1460))
-        .stream().forEach(n -> breakCipher(n));
+            -1460));
+    // ciphers = Arrays.asList(
+    // new Cipher("FC04B166-0174636F-6465804C-65637225-74632F24-DA1B7365-6322A632", 1, 2, 3));
+    ciphers.stream().forEach(n -> breakCipher(n));
   }
 
   private static void breakCipher(Cipher cipher) {

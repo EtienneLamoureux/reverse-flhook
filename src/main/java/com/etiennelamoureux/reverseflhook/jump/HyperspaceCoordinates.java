@@ -24,11 +24,11 @@ public class HyperspaceCoordinates {
   private float accuracy;
 
   public HyperspaceCoordinates(int system, Coordinates coordinates) {
-    this.seed = 0;// (short) (Math.random() * Short.MAX_VALUE);
+    this.seed = 5330;// (short) (Math.random() * Short.MAX_VALUE);
     this.system = system;
     this.coordinates = coordinates;
-    this.time = 0;// TimeUtil.secondsFrom1970() - TimeUtil.upTo1WeekInSeconds() +
-                  // Constants.HYPERSPACE_COORDINATES_LIFETIME;
+    this.time = 7103;// TimeUtil.secondsFrom1970() - TimeUtil.upTo1WeekInSeconds() +
+    // Constants.HYPERSPACE_COORDINATES_LIFETIME;
     this.accuracy = Constants.SURVEY_MK3_ACCURACY;
     this.parity = calculateParity();
   }
@@ -57,7 +57,7 @@ public class HyperspaceCoordinates {
     short parity = 0;
 
     for (int i = 2 /* Skip parity */; i < HCOORD_SIZE; i++) {
-      parity += Byte.toUnsignedInt(bytes[i]);
+      parity += bytes[i];
     }
 
     return parity;
