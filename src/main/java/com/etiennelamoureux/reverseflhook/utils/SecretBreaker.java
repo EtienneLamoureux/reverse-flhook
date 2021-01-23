@@ -53,7 +53,7 @@ public class SecretBreaker {
         new Cipher("1ffff36f-b768ffaf-e0ad567d-7b4bf8ec-a44a83a7-6ad15755-2dfb9674", 3693, -19,
             -1460));
     // ciphers = Arrays.asList(
-    // new Cipher("FC04B166-0174636F-6465804C-65637225-74632F24-DA1B7365-6322A632", 1, 2, 3));
+    // new Cipher("FC00B166-0174636F-6465804C-65637225-74632F24-DA1B7365-6322A632", 1, 2, 3));
     ciphers.stream().forEach(n -> breakCipher(n));
   }
 
@@ -69,7 +69,7 @@ public class SecretBreaker {
     }
 
     System.out.println(Arrays.toString(secret));
-    // System.out.println(new String(secret));
+    System.out.println(new String(secret));
   }
 
 }
