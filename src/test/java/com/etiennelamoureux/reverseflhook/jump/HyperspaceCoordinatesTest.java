@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test;
 
 public class HyperspaceCoordinatesTest {
   private static final String REAL_COORDS =
-      "5f026735-30f79688-319b6b76-e2504022-22b927a1-02662068-35337726";
+      "d5ffd205-7eeae6ae-1817e425-c660c976-dfe23276-7eef0454-38e59b72";
 
   @Test
   public void whenGettingStringThenGetCorrectString() {
     HyperspaceCoordinates hyperspaceCoordinates =
-        new HyperspaceCoordinates(196649, new Coordinates(14315f, 165f, -2360f));
+        new HyperspaceCoordinates(100, new Coordinates(1, 2, 3));
     String hyperspaceCoordinatesString = hyperspaceCoordinates.toString();
 
     HyperspaceCoordinates parsedHyperspaceCoordinates =

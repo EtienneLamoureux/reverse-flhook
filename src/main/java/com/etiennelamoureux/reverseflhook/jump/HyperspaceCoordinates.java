@@ -2,8 +2,8 @@ package com.etiennelamoureux.reverseflhook.jump;
 
 import com.etiennelamoureux.reverseflhook.utils.Constants;
 import com.etiennelamoureux.reverseflhook.utils.HexUtil;
-import com.etiennelamoureux.reverseflhook.utils.TimeUtil;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 /**
  * Builds a realistic hyperspace coordinates string to be used after the <code>/setcoords/<code>
@@ -24,11 +24,11 @@ public class HyperspaceCoordinates {
   private float accuracy;
 
   public HyperspaceCoordinates(int system, Coordinates coordinates) {
-    this.seed = (short) (Math.random() * Short.MAX_VALUE);
+    this.seed = 0;// (short) (Math.random() * Short.MAX_VALUE);
     this.system = system;
     this.coordinates = coordinates;
-    this.time = TimeUtil.secondsFrom1970() - TimeUtil.upTo1WeekInSeconds()
-        + Constants.HYPERSPACE_COORDINATES_LIFETIME;
+    this.time = 0;// TimeUtil.secondsFrom1970() - TimeUtil.upTo1WeekInSeconds() +
+                  // Constants.HYPERSPACE_COORDINATES_LIFETIME;
     this.accuracy = Constants.SURVEY_MK3_ACCURACY;
     this.parity = calculateParity();
   }
@@ -37,15 +37,15 @@ public class HyperspaceCoordinates {
     string = string.replace("-", "");
     byte[] bytes = encrypt(HexUtil.toByteArray(string));
 
-    parity = ByteBuffer.wrap(new byte[] {bytes[0], bytes[1]}).getShort();
-    seed = ByteBuffer.wrap(new byte[] {bytes[2], bytes[3]}).getShort();
-    system = ByteBuffer.wrap(new byte[] {bytes[4], bytes[5], bytes[6], bytes[7]}).getInt();
+    parity = ByteBuffer.wrap(new byte[] {bytes[1], bytes[0]}).getShort();
+    seed = ByteBuffer.wrap(new byte[] {bytes[3], bytes[2]}).getShort();
+    system = ByteBuffer.wrap(new byte[] {bytes[7], bytes[6], bytes[5], bytes[4]}).getInt();
     coordinates = new Coordinates(
-        ByteBuffer.wrap(new byte[] {bytes[8], bytes[9], bytes[10], bytes[11]}).getFloat(),
-        ByteBuffer.wrap(new byte[] {bytes[12], bytes[13], bytes[14], bytes[15]}).getFloat(),
-        ByteBuffer.wrap(new byte[] {bytes[16], bytes[17], bytes[18], bytes[19]}).getFloat());
-    time = ByteBuffer.wrap(new byte[] {bytes[20], bytes[21], bytes[22], bytes[23]}).getInt();
-    accuracy = ByteBuffer.wrap(new byte[] {bytes[24], bytes[25], bytes[26], bytes[27]}).getFloat();
+        ByteBuffer.wrap(new byte[] {bytes[11], bytes[10], bytes[9], bytes[8]}).getFloat(),
+        ByteBuffer.wrap(new byte[] {bytes[15], bytes[14], bytes[13], bytes[12],}).getFloat(),
+        ByteBuffer.wrap(new byte[] {bytes[19], bytes[18], bytes[17], bytes[16],}).getFloat());
+    time = ByteBuffer.wrap(new byte[] {bytes[23], bytes[22], bytes[21], bytes[20],}).getInt();
+    accuracy = ByteBuffer.wrap(new byte[] {bytes[27], bytes[26], bytes[25], bytes[24],}).getFloat();
 
     if (parity != calculateParity()) {
       throw new RuntimeException("Parity error");
@@ -88,7 +88,7 @@ public class HyperspaceCoordinates {
     ciphertext[1] = bytes[1];
 
     for (int i = 2 /* Skip parity */, p =
-        bytes[0] % (Constants.SECRET.length - 1); i < HCOORD_SIZE; i++, p++) {
+        Byte.toUnsignedInt(bytes[0]) % (Constants.SECRET.length - 1); i < HCOORD_SIZE; i++, p++) {
       if (p >= Constants.SECRET.length) {
         p = 0;
       }
@@ -100,7 +100,7 @@ public class HyperspaceCoordinates {
   }
 
   private byte[] getBytes() {
-    ByteBuffer byteBuffer = ByteBuffer.allocate(HCOORD_SIZE);
+    ByteBuffer byteBuffer = ByteBuffer.allocate(HCOORD_SIZE).order(ByteOrder.LITTLE_ENDIAN);
     byteBuffer.putShort(parity);
     byteBuffer.putShort(seed);
     byteBuffer.putInt(system);
