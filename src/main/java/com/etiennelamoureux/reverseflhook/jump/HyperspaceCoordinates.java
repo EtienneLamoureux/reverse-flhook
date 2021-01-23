@@ -57,7 +57,7 @@ public class HyperspaceCoordinates {
     short parity = 0;
 
     for (int i = 2 /* Skip parity */; i < HCOORD_SIZE; i++) {
-      parity += bytes[i];
+      parity += Byte.toUnsignedInt(bytes[i]);
     }
 
     return parity;
@@ -88,7 +88,7 @@ public class HyperspaceCoordinates {
     ciphertext[1] = bytes[1];
 
     for (int i = 2 /* Skip parity */, p =
-        bytes[0] % Constants.SECRET.length; i < HCOORD_SIZE; i++, p++) {
+        bytes[0] % (Constants.SECRET.length - 1); i < HCOORD_SIZE; i++, p++) {
       if (p >= Constants.SECRET.length) {
         p = 0;
       }
