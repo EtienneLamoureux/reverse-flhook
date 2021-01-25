@@ -2,6 +2,7 @@ package com.etiennelamoureux.reverseflhook.jump;
 
 import com.etiennelamoureux.reverseflhook.utils.Constants;
 import com.etiennelamoureux.reverseflhook.utils.HexUtil;
+import com.etiennelamoureux.reverseflhook.utils.TimeUtil;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -24,12 +25,16 @@ public class HyperspaceCoordinates {
   private float accuracy;
 
   public HyperspaceCoordinates(int system, Coordinates coordinates) {
-    this.seed = 5330;// (short) (Math.random() * Short.MAX_VALUE);
+    this(system, coordinates, Constants.SURVEY_MK3_ACCURACY);
+  }
+
+  public HyperspaceCoordinates(int system, Coordinates coordinates, float accuracy) {
+    this.seed = (short) (Math.random() * Short.MAX_VALUE);
     this.system = system;
     this.coordinates = coordinates;
-    this.time = 7103;// TimeUtil.secondsFrom1970() - TimeUtil.upTo1WeekInSeconds() +
-    // Constants.HYPERSPACE_COORDINATES_LIFETIME;
-    this.accuracy = Constants.SURVEY_MK3_ACCURACY;
+    this.time = TimeUtil.secondsFrom1970() - TimeUtil.upTo1WeekInSeconds()
+        + Constants.HYPERSPACE_COORDINATES_LIFETIME;
+    this.accuracy = accuracy;
     this.parity = calculateParity();
   }
 
