@@ -41,7 +41,7 @@ public class SecretBreaker {
             "16FE3679-B69CDBB3-341841A5-C6AD29C4-DAFAA176-FD8A5201-2DFD9B72",
             "3CFFC92E-77F7A2A0-BF8624F6-E6A16523-F9623922-23F20254-35AB9B26");
     ciphers = new ArrayList<>();
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 50; i++) {
       ciphers.add(
           new HyperspaceCoordinates(100, new Coordinates(1, 2, 3), Constants.SURVEY_MK1_ACCURACY)
               .toString());
@@ -54,6 +54,9 @@ public class SecretBreaker {
       System.out.println(
           n.getKey() + " " + Arrays.toString(n.getValue()) + " " + new String(n.getValue()));
     });
+
+    String secret = assembleSecret(secretSegments);
+    System.out.println("SECRET: " + secret);
   }
 
   private static SimpleEntry<Integer, byte[]> breakCipher(String cipher) {
@@ -70,5 +73,39 @@ public class SecretBreaker {
     }
 
     return new SimpleEntry<Integer, byte[]>(offset, secret);
+  }
+
+  /**
+   * N.B.: Assumes no sequence of two consecutive characters repeat.
+   * 
+   * @param secretSegmentsInByte
+   * @return {@link String}
+   */
+  private static String assembleSecret(
+      Collection<SimpleEntry<Integer, byte[]>> secretSegmentsInByte) {
+    Collection<String> secretSegments = secretSegmentsInByte.parallelStream()
+        .map(n -> new String(n.getValue())).collect(Collectors.toSet());
+
+    String secretSegment = secretSegments.iterator().next();
+    secretSegments.remove(secretSegment);
+    final StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append(secretSegment);
+    boolean secretIsComplete = false;
+
+    do {
+      String last2Chars = stringBuilder.substring(stringBuilder.length() - 2);
+      secretSegment = secretSegments.parallelStream().filter(n -> n.contains(last2Chars))
+          .findFirst().orElseThrow(() -> new RuntimeException(
+              "Not enough secret segments. Current secret: " + stringBuilder.toString()));
+      stringBuilder.append(secretSegment.substring(secretSegment.lastIndexOf(last2Chars) + 2));
+      secretSegments.remove(secretSegment);
+
+      if (stringBuilder.substring(stringBuilder.length() - 2)
+          .equals(stringBuilder.substring(0, 2))) {
+        secretIsComplete = true;
+      }
+    } while (!secretIsComplete);
+
+    return stringBuilder.toString();
   }
 }
