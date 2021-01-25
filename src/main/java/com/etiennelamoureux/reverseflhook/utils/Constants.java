@@ -13,7 +13,7 @@ public class Constants {
    *      "https://github.com/DiscoveryGC/FLHook/blob/9499f8be19611b836afcf292938da78033b9acef/Plugins/Public/playercntl_plugin/HyperJump.cpp#L186">Bug
    *      detail</a> (Should be >=, not simply >)
    */
-  public static final byte[] SECRET_PHRASE = "secretcode".getBytes();
+  public static final byte[] SECRET_PHRASE = "8ea084da-545c4aa5-39353348-4593c040".getBytes();
   public static final byte[] SECRET = new byte[SECRET_PHRASE.length + 1];
   static {
     for (int i = 0; i < SECRET_PHRASE.length; i++) {
