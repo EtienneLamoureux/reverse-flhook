@@ -68,19 +68,19 @@ public class HyperspaceCoordinates {
     return parity;
   }
 
-  public int getSystem() {
+  int getSystem() {
     return system;
   }
 
-  public Coordinates getCoordinates() {
+  Coordinates getCoordinates() {
     return coordinates;
   }
 
-  public int getTime() {
+  int getTime() {
     return time;
   }
 
-  public float getAccuracy() {
+  float getAccuracy() {
     return accuracy;
   }
 
