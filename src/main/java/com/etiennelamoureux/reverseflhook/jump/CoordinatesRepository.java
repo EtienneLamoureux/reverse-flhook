@@ -25,7 +25,7 @@ public class CoordinatesRepository {
 
   public Coordinates findOneBySystemAndBase(String system, String base) {
     try (Stream<String> lines = Files.lines(Paths.get(buildPath(system)))) {
-      String lastPosLine = lines.takeWhile(line -> !line.equals(BASE + base))
+      String lastPosLine = lines.takeWhile(line -> !line.equalsIgnoreCase(BASE + base))
           .filter(line -> line.startsWith(POS)).reduce((first, second) -> second).get();
 
       return new Coordinates(Arrays.asList(lastPosLine.substring(POS.length()).split(", ")).stream()
