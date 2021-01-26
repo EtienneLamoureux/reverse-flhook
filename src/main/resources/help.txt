@@ -1,8 +1,8 @@
-usage: java -jar reverseFLHook-<version>.jar <command> <arguments> [<flags>]
+usage: java -jar reverseFLHook.jar <command> <arguments> [<flags>]
 
 # Commands
-    survey   <system> <base>; Generates hyperspace coordinates (MK3 accuracy by default, valid for [28, 35] days)
-    refresh  <coords>; Generates new hyperspace coordinates with the same location and accuracy as the ones provided (valid for [28, 35] days)
+    survey   <system> <base>; Generates hyperspace coordinates (MK3 precision, valid for [28, 35] days)
+    refresh  <coords>; Generates new hyperspace coordinates at the same location as the ones provided (valid for [28, 35] days)
 
 # Arguments
     system   System nickname, e.g. 'ew01' for Tau-37
@@ -10,13 +10,13 @@ usage: java -jar reverseFLHook-<version>.jar <command> <arguments> [<flags>]
     coords   Full hyperspace coordinates string, e.g. '16FE3679-B69CDBB3-341841A5-C6AD29C4-DAFAA176-FD8A5201-2DFD9B72'
 
 # Flags
-    --admin  Uses admin-level accuracy when generating hyperspace coordinates
-    --copy   Copies the generated hyperspace coordinates to the clipboard
-    --auto   After a 5s delay, types '{ENTER}/setcoords <coords>{ENTER}' as if keys were pressed on the keyboard
+    -admin   Use admin-level precision when generating hyperspace coordinates
+    -copy    Places the generated hyperspace coordinates in the clipboard
+    -auto    After a 5s delay, types '/setcoords' + the generated hyperspace coordinates as if keys were pressed on the keyboard
 
 # Examples
-    java -jar reverseFLHook-<version>.jar survey ew01 ew01_01_base --auto
-    java -jar reverseFLHook-<version>.jar refresh 16FE3679-B69CDBB3-341841A5-C6AD29C4-DAFAA176-FD8A5201-2DFD9B72 --copy
+    java -jar reverseFLHook.jar survey ew01 ew01_01_base -auto
+    java -jar reverseFLHook.ar refresh 16FE3679-B69CDBB3-341841A5-C6AD29C4-DAFAA176-FD8A5201-2DFD9B72 -copy
 
 # License
     BSD 3-Clause License (Revised), Etienne Lamoureux
