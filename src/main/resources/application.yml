@@ -6,6 +6,6 @@ flhook:
 
 data:
   ini:
-    rootPath: P:\Games\Freelancer\DiscoveryDev
+    rootPath: P:\Games\Freelancer\Discovery
     relativePaths:
-      systems: \DATA\UNIVERSE\SYSTEMS
+      systems: DATA\UNIVERSE\SYSTEMS

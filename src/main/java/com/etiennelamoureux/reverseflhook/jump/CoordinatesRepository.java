@@ -18,18 +18,18 @@ public class CoordinatesRepository {
   private static final String POS = "pos = ";
   private static final String BASE = "base = ";
 
-  @Value(value = "data.ini.rootPath")
+  @Value(value = "${data.ini.rootPath}")
   private String rootPath;
-  @Value(value = "data.ini.relativePaths.systems")
+  @Value(value = "${data.ini.relativePaths.systems}")
   private String systemsRelativePath;
 
   public Coordinates findOneBySystemAndBase(String system, String base) {
     try (Stream<String> lines = Files.lines(Paths.get(buildPath(system)))) {
-      return new Coordinates(Arrays
-          .asList(lines.takeWhile(line -> !line.equals(BASE + base))
-              .filter(line -> line.startsWith(POS)).reduce((first, second) -> second).get()
-              .substring(POS.length()).split(", "))
-          .stream().map(n -> Float.parseFloat(n)).collect(Collectors.toList()));
+      String lastPosLine = lines.takeWhile(line -> !line.equals(BASE + base))
+          .filter(line -> line.startsWith(POS)).reduce((first, second) -> second).get();
+
+      return new Coordinates(Arrays.asList(lastPosLine.substring(POS.length()).split(", ")).stream()
+          .map(n -> Float.parseFloat(n)).collect(Collectors.toList()));
     } catch (IOException e) {
       throw new EntityNotFoundException(String.format(Locale.ROOT,
           "Could not find coordinates for system '%s', base '%s'", system, base));
