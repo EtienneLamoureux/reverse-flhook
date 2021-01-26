@@ -11,7 +11,7 @@ public class HyperspaceCoordinatesService {
 
   public HyperspaceCoordinates survey(String system, String base) {
     return new HyperspaceCoordinates(IdUtil.generate(system),
-        coordinatesRepository.findOneBySystemAndBase(system, base));
+        coordinatesRepository.findOneBySystemAndBase(system, base).blur());
   }
 
   public HyperspaceCoordinates refresh(String string) {
