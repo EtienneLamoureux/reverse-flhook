@@ -1,4 +1,4 @@
-usage: java -jar reverseFLHook.jar <command> <arguments> [<flags>]
+usage: java -jar reverseFLHook-<version>.jar <command> <arguments> [<flags>]
 
 # Commands
     survey   <system> <base>; Generates hyperspace coordinates (MK3 accuracy by default, valid for [28, 35] days)
@@ -15,8 +15,8 @@ usage: java -jar reverseFLHook.jar <command> <arguments> [<flags>]
     --auto   After a 5s delay, types '{ENTER}/setcoords <coords>{ENTER}' as if keys were pressed on the keyboard
 
 # Examples
-    java -jar reverseFLHook.jar survey ew01 ew01_01_base --auto
-    java -jar reverseFLHook.jar refresh 16FE3679-B69CDBB3-341841A5-C6AD29C4-DAFAA176-FD8A5201-2DFD9B72 --copy
+    java -jar reverseFLHook-<version>.jar survey ew01 ew01_01_base --auto
+    java -jar reverseFLHook-<version>.jar refresh 16FE3679-B69CDBB3-341841A5-C6AD29C4-DAFAA176-FD8A5201-2DFD9B72 --copy
 
 # License
     BSD 3-Clause License (Revised), Etienne Lamoureux
