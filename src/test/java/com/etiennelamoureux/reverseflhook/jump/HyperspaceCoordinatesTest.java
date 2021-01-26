@@ -9,7 +9,7 @@ public class HyperspaceCoordinatesTest {
       "5F026735-30F79688-319B6B76-E2504022-22B927A1-02662068-35337726";
 
   @Test
-  public void givenCircularUsageThenIsSelfConsistent() {
+  public void whenConstructingThenParseCorrectly() {
     HyperspaceCoordinates hyperspaceCoordinates =
         new HyperspaceCoordinates(100, new Coordinates(1, 2, 3));
     String hyperspaceCoordinatesString = hyperspaceCoordinates.toString();
@@ -26,4 +26,5 @@ public class HyperspaceCoordinatesTest {
 
     assertEquals(REAL_COORDS, hyperspaceCoordinates.toString());
   }
+
 }

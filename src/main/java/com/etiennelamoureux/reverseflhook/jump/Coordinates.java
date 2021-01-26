@@ -1,6 +1,8 @@
 package com.etiennelamoureux.reverseflhook.jump;
 
 public class Coordinates {
+  private static final float ERROR_MARGIN = 1000.0f;
+
   private float x;
   private float y;
   private float z;
@@ -21,6 +23,14 @@ public class Coordinates {
 
   public float getZ() {
     return z;
+  }
+
+  public Coordinates blur() {
+    x += (Math.random() * ERROR_MARGIN) / 2;
+    y += (Math.random() * ERROR_MARGIN) / 2;
+    z += (Math.random() * ERROR_MARGIN) / 2;
+
+    return this;
   }
 
   @Override
