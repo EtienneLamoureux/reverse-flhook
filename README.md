@@ -27,7 +27,7 @@ This project reserve-engineers some of the capabilities of [FLHook](https://gith
 8. Run it using `java -jar reverseFLHook-<version>.jar <command> <arguments> [<flags>]`
 
 ### Commands
-See the [help file](/src/main/ressources/help.txt).
+See the [help file](/src/main/resources/help.txt).
 
 ## Development
 ### Requirements
@@ -38,7 +38,7 @@ See the [help file](/src/main/ressources/help.txt).
 #### Eclipse
 1. Read the license
 2. Clone the repository
-3. Adjust the value of `src/main/resources/application.yml` to your local setup
+3. Adjust the values in `src/main/resources/application.yml` to your local setup
 4. In a Git bash, run `./gradle.bat clean build --refresh-dependencies`
 5. In Eclipse, click File > Import... > Existing gradle project
 6. In Eclipse, right-click the project > Run as > JUnit Test
