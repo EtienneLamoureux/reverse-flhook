@@ -1,0 +1,10 @@
+spring.main.web-application-type: NONE
+
+flhook:
+  secret: 8ea084da-545c4aa5-39353348-4593c040
+
+data:
+  ini:
+    rootPath: P:\Games\Freelancer\DiscoveryDev
+    relativePaths:
+      systems: \DATA\UNIVERSE\SYSTEMS
