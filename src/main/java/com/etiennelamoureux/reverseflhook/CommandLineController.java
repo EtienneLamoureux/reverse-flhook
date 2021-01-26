@@ -2,10 +2,13 @@ package com.etiennelamoureux.reverseflhook;
 
 import com.etiennelamoureux.reverseflhook.jump.HyperspaceCoordinates;
 import com.etiennelamoureux.reverseflhook.jump.HyperspaceCoordinatesService;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Locale;
+import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
@@ -18,7 +21,17 @@ public class CommandLineController implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
     Deque<String> arguments = stackArguments(args);
-    Command command = Command.valueOf(arguments.pop().toUpperCase(Locale.ROOT));
+
+    try {
+      run(arguments);
+    } catch (Exception e) {
+      System.out.println("ERROR: " + e.getMessage());
+      printHelp();
+    }
+  }
+
+  private void run(Deque<String> arguments) {
+    Command command = getCommand(arguments);
     HyperspaceCoordinates hyperspaceCoordinates;
 
     switch (command) {
@@ -43,6 +56,20 @@ public class CommandLineController implements CommandLineRunner {
 
     return arguments;
   }
+
+  private Command getCommand(Deque<String> arguments) {
+    return Command.valueOf(arguments.pop().toUpperCase(Locale.ROOT));
+  }
+
+  private void printHelp() {
+    try (Stream<String> lines = new BufferedReader(new InputStreamReader(
+        Thread.currentThread().getContextClassLoader().getResourceAsStream("help.txt"))).lines()) {
+      lines.forEach(line -> System.out.println(line));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
 
   enum Command {
     SURVEY, REFRESH
