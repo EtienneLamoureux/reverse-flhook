@@ -1,5 +1,7 @@
 package com.etiennelamoureux.reverseflhook.jump;
 
+import java.util.List;
+
 public class Coordinates {
   private static final float ERROR_MARGIN = 1000.0f;
 
@@ -11,6 +13,16 @@ public class Coordinates {
     this.x = x;
     this.y = y;
     this.z = z;
+  }
+
+  public Coordinates(List<Float> floats) {
+    if (floats.size() != 3) {
+      throw new IllegalArgumentException();
+    }
+
+    this.x = floats.get(0);
+    this.y = floats.get(1);
+    this.z = floats.get(2);
   }
 
   public float getX() {

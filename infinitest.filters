@@ -1,1 +1,1 @@
-exclude .*FTest
+exclude .*FTest, .*ITest
