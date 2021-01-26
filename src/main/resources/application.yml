@@ -1,4 +1,5 @@
 spring.main.web-application-type: NONE
+logging.level.root: ERROR
 
 flhook:
   secret: 8ea084da-545c4aa5-39353348-4593c040
