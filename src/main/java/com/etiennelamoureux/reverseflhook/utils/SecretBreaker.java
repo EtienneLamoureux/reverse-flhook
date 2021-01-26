@@ -10,8 +10,8 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class SecretBreaker {
-  private static final int KNOWN_LENGTH_IN_BYTES = 4;
-  private static final int OVERLAP_LENGTH = KNOWN_LENGTH_IN_BYTES / 2;
+  static final int KNOWN_LENGTH_IN_BYTES = 4;
+  static final int OVERLAP_LENGTH = KNOWN_LENGTH_IN_BYTES / 2;
 
   /**
    * Given that the accuracy is always at the end in the cipher, and that its value before and after
@@ -107,6 +107,8 @@ public class SecretBreaker {
             "F2FE592B-B324C7D2-DF32EC72-02E100F5-A5BBBFF2-AB1B084D-33F19C72",
             "8DFEAF37-B31CCBD3-DF2FE172-53E319A1-F0BBF1F5-F5480853-33FC976A",
             "7DFF700A-B017CB8F-E736E17F-55E31DF4-AF8EE4A3-5E4C0554-64A98272");
+
+    // TEST CODE
     // ciphers = new ArrayList<>();
     // for (int i = 0; i < 250; i++) {
     // ciphers.add(
@@ -143,7 +145,7 @@ public class SecretBreaker {
   }
 
   /**
-   * N.B.: Assumes no sequence of two consecutive characters repeat.
+   * N.B.: Assumes no sequence of {@link #OVERLAP_LENGTH} consecutive characters repeat.
    * 
    * @param secretSegmentsInByte
    * @return {@link String}
@@ -157,7 +159,6 @@ public class SecretBreaker {
     secretSegments.remove(secretSegment);
     final StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append(secretSegment);
-    boolean secretIsComplete = false;
 
     do {
       String last2Chars = stringBuilder.substring(stringBuilder.length() - OVERLAP_LENGTH);
@@ -168,12 +169,19 @@ public class SecretBreaker {
           .append(secretSegment.substring(secretSegment.lastIndexOf(last2Chars) + OVERLAP_LENGTH));
       secretSegments.remove(secretSegment);
 
-      if (stringBuilder.substring(stringBuilder.length() - OVERLAP_LENGTH)
-          .equals(stringBuilder.substring(0, OVERLAP_LENGTH))) {
-        secretIsComplete = true;
-      }
-    } while (!secretIsComplete);
+    } while (!isSecretComplete(stringBuilder));
 
     return stringBuilder.toString().substring(OVERLAP_LENGTH);
+  }
+
+  private static boolean isSecretComplete(final StringBuilder stringBuilder) {
+    for (int i = OVERLAP_LENGTH; i < KNOWN_LENGTH_IN_BYTES; i++) {
+      if (stringBuilder.substring(stringBuilder.length() - i)
+          .equals(stringBuilder.substring(0, i))) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }
