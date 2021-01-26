@@ -11,4 +11,7 @@ public class CommandLineController implements CommandLineRunner {
     System.out.println("bonjour");
   }
 
+  enum Commands {
+    SURVEY, REFRESH
+  }
 }

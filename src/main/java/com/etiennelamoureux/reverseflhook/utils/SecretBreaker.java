@@ -1,5 +1,6 @@
 package com.etiennelamoureux.reverseflhook.utils;
 
+import com.etiennelamoureux.reverseflhook.exceptions.NotEnoughSecretSegmentsException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.AbstractMap.SimpleEntry;
@@ -107,7 +108,7 @@ public class SecretBreaker {
             "8DFEAF37-B31CCBD3-DF2FE172-53E319A1-F0BBF1F5-F5480853-33FC976A",
             "7DFF700A-B017CB8F-E736E17F-55E31DF4-AF8EE4A3-5E4C0554-64A98272");
     // ciphers = new ArrayList<>();
-    // for (int i = 0; i < 50; i++) {
+    // for (int i = 0; i < 250; i++) {
     // ciphers.add(
     // new HyperspaceCoordinates(100, new Coordinates(1, 2, 3), Constants.SURVEY_MK1_ACCURACY)
     // .toString());
@@ -160,9 +161,9 @@ public class SecretBreaker {
 
     do {
       String last2Chars = stringBuilder.substring(stringBuilder.length() - OVERLAP_LENGTH);
-      secretSegment = secretSegments.parallelStream().filter(n -> n.contains(last2Chars))
-          .findFirst().orElseThrow(() -> new RuntimeException(
-              "Not enough secret segments. Current secret: " + stringBuilder.toString()));
+      secretSegment =
+          secretSegments.parallelStream().filter(n -> n.contains(last2Chars)).findFirst()
+              .orElseThrow(() -> new NotEnoughSecretSegmentsException(stringBuilder.toString()));
       stringBuilder
           .append(secretSegment.substring(secretSegment.lastIndexOf(last2Chars) + OVERLAP_LENGTH));
       secretSegments.remove(secretSegment);

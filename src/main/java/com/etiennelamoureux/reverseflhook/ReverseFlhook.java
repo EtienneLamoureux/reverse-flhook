@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ReverseFlhookApplication {
+public class ReverseFlhook {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ReverseFlhookApplication.class, args);
+		SpringApplication.run(ReverseFlhook.class, args);
 	}
 
 }
