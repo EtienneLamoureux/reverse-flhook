@@ -68,6 +68,22 @@ public class HyperspaceCoordinates {
     return parity;
   }
 
+  public int getSystem() {
+    return system;
+  }
+
+  public Coordinates getCoordinates() {
+    return coordinates;
+  }
+
+  public int getTime() {
+    return time;
+  }
+
+  public float getAccuracy() {
+    return accuracy;
+  }
+
   @Override
   public String toString() {
     return format(encrypt(getBytes()));
