@@ -2,6 +2,7 @@ package com.etiennelamoureux.reverseflhook.jump;
 
 import com.etiennelamoureux.reverseflhook.utils.Constants;
 import com.etiennelamoureux.reverseflhook.utils.HexUtil;
+import com.etiennelamoureux.reverseflhook.utils.Secret;
 import com.etiennelamoureux.reverseflhook.utils.TimeUtil;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -108,13 +109,13 @@ public class HyperspaceCoordinates {
     ciphertext[0] = bytes[0];
     ciphertext[1] = bytes[1];
 
-    for (int i = 2 /* Skip parity */, p =
-        Byte.toUnsignedInt(bytes[0]) % (Constants.SECRET.length - 1); i < HCOORD_SIZE; i++, p++) {
-      if (p >= Constants.SECRET.length) {
+    for (int i = 2 /* Skip parity */, p = Byte.toUnsignedInt(bytes[0])
+        % (Secret.getInstance().getBytes().length - 1); i < HCOORD_SIZE; i++, p++) {
+      if (p >= Secret.getInstance().getBytes().length) {
         p = 0;
       }
 
-      ciphertext[i] = (byte) (bytes[i] ^ Constants.SECRET[p]);
+      ciphertext[i] = (byte) (bytes[i] ^ Secret.getInstance().getBytes()[p]);
     }
 
     return ciphertext;
