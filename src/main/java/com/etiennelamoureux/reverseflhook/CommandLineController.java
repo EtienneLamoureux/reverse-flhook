@@ -36,8 +36,15 @@ public class CommandLineController implements CommandLineRunner {
 
     switch (command) {
       case SURVEY: {
-        hyperspaceCoordinates =
-            hyperspaceCoordinatesService.survey(arguments.pop(), arguments.pop());
+        try {
+          Float.parseFloat(arguments.peek());
+          hyperspaceCoordinates = hyperspaceCoordinatesService.survey(arguments.pop(),
+              Float.parseFloat(arguments.pop()), Float.parseFloat(arguments.pop()),
+              Float.parseFloat(arguments.pop()));
+        } catch (NumberFormatException e) {
+          hyperspaceCoordinates =
+              hyperspaceCoordinatesService.survey(arguments.pop(), arguments.pop());
+        }
         break;
       }
       default:

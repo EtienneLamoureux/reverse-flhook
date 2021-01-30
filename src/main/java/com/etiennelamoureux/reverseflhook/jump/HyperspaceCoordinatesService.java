@@ -14,6 +14,10 @@ public class HyperspaceCoordinatesService {
         coordinatesRepository.findOneBySystemAndBase(system, base).blur());
   }
 
+  public HyperspaceCoordinates survey(String system, float x, float y, float z) {
+    return new HyperspaceCoordinates(IdUtil.generate(system), new Coordinates(x, y, z).blur());
+  }
+
   public HyperspaceCoordinates refresh(String string) {
     HyperspaceCoordinates hyperspaceCoordinates = new HyperspaceCoordinates(string);
 

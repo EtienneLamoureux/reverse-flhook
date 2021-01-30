@@ -11,10 +11,17 @@ public class CommandLineControllerITest {
   private ApplicationContext applicationContext;
 
   @Test
-  public void whenSurveyingThenDontThrow() throws Exception {
+  public void whenSurveyingBaseThenDontThrow() throws Exception {
     CommandLineController commandLineController =
         applicationContext.getBean(CommandLineController.class);
     commandLineController.run("survey", "ew01", "ew01_01_base");
+  }
+
+  @Test
+  public void whenSurveyingPositionThenDontThrow() throws Exception {
+    CommandLineController commandLineController =
+        applicationContext.getBean(CommandLineController.class);
+    commandLineController.run("survey", "fp7_system", "-30937", "-3400", "-13054");
   }
 
   @Test
