@@ -1,15 +1,14 @@
 # Reverse FLHook
 This project reserve-engineers some of the capabilities of [FLHook](https://github.com/DiscoveryGC/FLHook), giving players direct access to some servers-side functions.
 
-- [Reverse FLHook](#reverse-flhook)
-  * [Usage](#usage)
-    + [Requirements](#requirements)
-    + [Installation](#installation)
-    + [Commands](#commands)
-  * [Development](#development)
-    + [Requirements](#requirements-1)
-    + [Installation](#installation-1)
-      - [Eclipse](#eclipse)
+- [Usage](#usage)
+  * [Requirements](#requirements)
+  * [Installation](#installation)
+  * [Commands](#commands)
+- [Development](#development)
+  * [Requirements](#requirements-1)
+  * [Installation](#installation-1)
+    + [Eclipse](#eclipse)
 
 ## Usage
 ### Requirements
