@@ -2,6 +2,8 @@ package com.etiennelamoureux.reverseflhook;
 
 import com.etiennelamoureux.reverseflhook.jump.HyperspaceCoordinates;
 import com.etiennelamoureux.reverseflhook.jump.HyperspaceCoordinatesService;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -36,14 +38,15 @@ public class CommandLineController implements CommandLineRunner {
 
     switch (command) {
       case SURVEY: {
+        String system = arguments.pop();
+
         try {
           Float.parseFloat(arguments.peek());
-          hyperspaceCoordinates = hyperspaceCoordinatesService.survey(arguments.pop(),
-              Float.parseFloat(arguments.pop()), Float.parseFloat(arguments.pop()),
-              Float.parseFloat(arguments.pop()));
-        } catch (NumberFormatException e) {
           hyperspaceCoordinates =
-              hyperspaceCoordinatesService.survey(arguments.pop(), arguments.pop());
+              hyperspaceCoordinatesService.survey(system, Float.parseFloat(arguments.pop()),
+                  Float.parseFloat(arguments.pop()), Float.parseFloat(arguments.pop()));
+        } catch (NumberFormatException e) {
+          hyperspaceCoordinates = hyperspaceCoordinatesService.survey(system, arguments.pop());
         }
         break;
       }
@@ -52,6 +55,15 @@ public class CommandLineController implements CommandLineRunner {
         hyperspaceCoordinates = hyperspaceCoordinatesService.refresh(arguments.pop());
         break;
       }
+    }
+
+    if (arguments.contains(Flags.COPY)) {
+      Toolkit.getDefaultToolkit().getSystemClipboard()
+          .setContents(new StringSelection(hyperspaceCoordinates.toString()), null);
+    }
+
+    if (arguments.contains(Flags.AUTO)) {
+      // TODO
     }
 
     System.out.println(hyperspaceCoordinates.toString());
@@ -77,8 +89,12 @@ public class CommandLineController implements CommandLineRunner {
     }
   }
 
-
   enum Command {
     SURVEY, REFRESH
+  }
+
+  class Flags {
+    static final String COPY = "-copy";
+    static final String AUTO = "-auto";
   }
 }

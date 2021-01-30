@@ -1,5 +1,10 @@
 package com.etiennelamoureux.reverseflhook;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,25 +15,24 @@ public class CommandLineControllerITest {
   @Autowired
   private ApplicationContext applicationContext;
 
-  @Test
-  public void whenSurveyingBaseThenDontThrow() throws Exception {
-    CommandLineController commandLineController =
-        applicationContext.getBean(CommandLineController.class);
-    commandLineController.run("survey", "ew01", "ew01_01_base");
+  private CommandLineController commandLineController;
+
+  @BeforeAll
+  public static void beforeAll() {
+    System.setProperty("java.awt.headless", "false");
+  }
+
+  @BeforeEach
+  public void setUp() {
+    commandLineController = applicationContext.getBean(CommandLineController.class);
   }
 
   @Test
-  public void whenSurveyingPositionThenDontThrow() throws Exception {
-    CommandLineController commandLineController =
-        applicationContext.getBean(CommandLineController.class);
-    commandLineController.run("survey", "fp7_system", "-30937", "-3400", "-13054");
-  }
+  public void givenCopyFlagWhenSurveyingThenCoordsAreInClipboard() throws Exception {
+    commandLineController.run("survey", "ew01", "ew01_01_base", CommandLineController.Flags.COPY);
 
-  @Test
-  public void whenRefreshingThenDontThrow() throws Exception {
-    CommandLineController commandLineController =
-        applicationContext.getBean(CommandLineController.class);
-    commandLineController.run("refresh",
-        "16FE3679-B69CDBB3-341841A5-C6AD29C4-DAFAA176-FD8A5201-2DFD9B72");
+    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+    String hyperspaceCoordinates = (String) clipboard.getData(DataFlavor.stringFlavor);
+    commandLineController.run("refresh", hyperspaceCoordinates);
   }
 }

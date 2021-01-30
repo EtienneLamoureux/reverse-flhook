@@ -6,17 +6,16 @@ usage: java -jar reverseFLHook.jar <command> <arguments> [<flags>]
     refresh  <coords>; Generates new hyperspace coordinates at the same location as the ones provided (valid for [28, 35] days)
 
 # Arguments
-    system   System nickname, e.g. 'ew01' for Tau-37
-    base     Base nickname, e.g. 'ew01_01_base' for Freeport-10
+    system   System nickname, e.g. "ew01" for Tau-37
+    base     Base nickname, e.g. "ew01_01_base" for Freeport-10
     x        X component of the coordinates, e.g. first number from the "/pos" server command
     y        Y component of the coordinates, e.g. second number from the "/pos" server command
     z        Z component of the coordinates, e.g. third number from the "/pos" server command
-    coords   Full hyperspace coordinates string, e.g. '16FE3679-B69CDBB3-341841A5-C6AD29C4-DAFAA176-FD8A5201-2DFD9B72'
+    coords   Full hyperspace coordinates string, e.g. "16FE3679-B69CDBB3-341841A5-C6AD29C4-DAFAA176-FD8A5201-2DFD9B72"
 
 # Flags
-    -admin   Use admin-level precision when generating hyperspace coordinates
     -copy    Places the generated hyperspace coordinates in the clipboard
-    -auto    After a 5s delay, types '/setcoords' + the generated hyperspace coordinates as if keys were pressed on the keyboard
+    -auto    After a 5s delay, types "/setcoords" + the generated hyperspace coordinates as if keys were pressed on the keyboard
 
 # Examples
     java -jar reverseFLHook.jar survey ew01 ew01_01_base -auto
