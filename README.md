@@ -1,14 +1,17 @@
 # Reverse FLHook
 This project reserve-engineers some of the capabilities of [FLHook](https://github.com/DiscoveryGC/FLHook), giving players direct access to some servers-side functions.
 
+- [Features](#features)
 - [Usage](#usage)
   * [Requirements](#requirements)
   * [Installation](#installation)
-  * [Commands](#commands)
 - [Development](#development)
   * [Requirements](#requirements-1)
   * [Installation](#installation-1)
     + [Eclipse](#eclipse)
+
+## Features
+See the [help file](/src/main/resources/help.txt).
 
 ## Usage
 ### Requirements
@@ -24,9 +27,6 @@ This project reserve-engineers some of the capabilities of [FLHook](https://gith
 6. Open a command prompt
 7. Navigate to the jar location
 8. Run it using `java -jar reverseFLHook-<version>.jar <command> <arguments> [<flags>]`
-
-### Commands
-See the [help file](/src/main/resources/help.txt).
 
 ## Development
 ### Requirements
