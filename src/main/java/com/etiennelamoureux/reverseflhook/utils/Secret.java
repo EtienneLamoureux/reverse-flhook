@@ -3,6 +3,9 @@ package com.etiennelamoureux.reverseflhook.utils;
 import org.springframework.beans.factory.annotation.Value;
 
 public class Secret {
+  /**
+   * Discovery Freelancer server's secret
+   */
   private static final String SECRET = "8ea084da-545c4aa5-39353348-4593c040";
 
   private static Secret instance;

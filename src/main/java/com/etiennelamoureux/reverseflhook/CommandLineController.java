@@ -2,6 +2,7 @@ package com.etiennelamoureux.reverseflhook;
 
 import com.etiennelamoureux.reverseflhook.jump.HyperspaceCoordinates;
 import com.etiennelamoureux.reverseflhook.jump.HyperspaceCoordinatesService;
+import com.etiennelamoureux.reverseflhook.utils.KeyboardUtil;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.io.BufferedReader;
@@ -32,7 +33,23 @@ public class CommandLineController implements CommandLineRunner {
     }
   }
 
-  private void run(Deque<String> arguments) {
+  private Deque<String> stackArguments(String... args) {
+    Deque<String> arguments = new LinkedList<>();
+    Arrays.stream(args).forEach(n -> arguments.addLast(n));
+
+    return arguments;
+  }
+
+  private void printHelp() {
+    try (Stream<String> lines = new BufferedReader(new InputStreamReader(
+        Thread.currentThread().getContextClassLoader().getResourceAsStream("help.txt"))).lines()) {
+      lines.forEach(line -> System.out.println(line));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  private void run(Deque<String> arguments) throws InterruptedException {
     Command command = getCommand(arguments);
     HyperspaceCoordinates hyperspaceCoordinates;
 
@@ -57,36 +74,37 @@ public class CommandLineController implements CommandLineRunner {
       }
     }
 
+    System.out.println(hyperspaceCoordinates.toString());
+
     if (arguments.contains(Flags.COPY)) {
-      Toolkit.getDefaultToolkit().getSystemClipboard()
-          .setContents(new StringSelection(hyperspaceCoordinates.toString()), null);
+      copyToClipboard(hyperspaceCoordinates);
     }
 
     if (arguments.contains(Flags.AUTO)) {
-      // TODO
+      typeOnKeyboard(hyperspaceCoordinates);
     }
-
-    System.out.println(hyperspaceCoordinates.toString());
-  }
-
-  private Deque<String> stackArguments(String... args) {
-    Deque<String> arguments = new LinkedList<>();
-    Arrays.stream(args).forEach(n -> arguments.addLast(n));
-
-    return arguments;
   }
 
   private Command getCommand(Deque<String> arguments) {
     return Command.valueOf(arguments.pop().toUpperCase(Locale.ROOT));
   }
 
-  private void printHelp() {
-    try (Stream<String> lines = new BufferedReader(new InputStreamReader(
-        Thread.currentThread().getContextClassLoader().getResourceAsStream("help.txt"))).lines()) {
-      lines.forEach(line -> System.out.println(line));
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+  private void copyToClipboard(HyperspaceCoordinates hyperspaceCoordinates) {
+    Toolkit.getDefaultToolkit().getSystemClipboard()
+        .setContents(new StringSelection(hyperspaceCoordinates.toString()), null);
+
+    System.out.println("Hyperspace coordinates copied to clipboard!");
+  }
+
+  private void typeOnKeyboard(HyperspaceCoordinates hyperspaceCoordinates)
+      throws InterruptedException {
+    System.out.println("Typing hyperspace coordinates in 5 seconds...");
+    Thread.sleep(5000l);
+
+    new KeyboardUtil().type(
+        KeyboardUtil.ENTER + "/setcoords " + hyperspaceCoordinates.toString() + KeyboardUtil.ENTER);
+
+    System.out.println("Done!");
   }
 
   enum Command {

@@ -5,6 +5,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,5 +35,11 @@ public class CommandLineControllerITest {
     Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
     String hyperspaceCoordinates = (String) clipboard.getData(DataFlavor.stringFlavor);
     commandLineController.run("refresh", hyperspaceCoordinates);
+  }
+
+  @Disabled(value = "Actually sends key-press events")
+  @Test
+  public void givenAutoFlagWhenSurveyingThenDontThrow() throws Exception {
+    commandLineController.run("survey", "ew01", "ew01_01_base", CommandLineController.Flags.AUTO);
   }
 }
