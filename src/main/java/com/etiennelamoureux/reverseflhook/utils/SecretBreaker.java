@@ -132,7 +132,6 @@ public class SecretBreaker {
     byte[] bytes = HexUtil.toByteArray(cipher.replace("-", ""));
     int offset = Byte.toUnsignedInt(bytes[0]);
     byte[] encrypted = Arrays.copyOfRange(bytes, 24, 28);
-    HexUtil.toByteArray(cipher.replace("-", "").substring(48, 56));
     byte[] decrypted = ByteBuffer.allocate(KNOWN_LENGTH_IN_BYTES).order(ByteOrder.LITTLE_ENDIAN)
         .putFloat(Constants.SURVEY_MK1_ACCURACY).array();
     byte[] secret = new byte[KNOWN_LENGTH_IN_BYTES];
@@ -161,12 +160,12 @@ public class SecretBreaker {
     stringBuilder.append(secretSegment);
 
     do {
-      String last2Chars = stringBuilder.substring(stringBuilder.length() - OVERLAP_LENGTH);
+      String overlap = stringBuilder.substring(stringBuilder.length() - OVERLAP_LENGTH);
       secretSegment =
-          secretSegments.parallelStream().filter(n -> n.contains(last2Chars)).findFirst()
+          secretSegments.parallelStream().filter(n -> n.contains(overlap)).findFirst()
               .orElseThrow(() -> new NotEnoughSecretSegmentsException(stringBuilder.toString()));
       stringBuilder
-          .append(secretSegment.substring(secretSegment.lastIndexOf(last2Chars) + OVERLAP_LENGTH));
+          .append(secretSegment.substring(secretSegment.lastIndexOf(overlap) + OVERLAP_LENGTH));
       secretSegments.remove(secretSegment);
 
     } while (!isSecretComplete(stringBuilder));
