@@ -1,11 +1,14 @@
 package com.etiennelamoureux.reverseflhook.jump;
 
+import com.etiennelamoureux.reverseflhook.utils.Constants;
 import com.etiennelamoureux.reverseflhook.utils.IdUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class HyperspaceCoordinatesService {
+  private boolean adminMode = false;
+
   @Autowired
   private CoordinatesRepository coordinatesRepository;
 
@@ -15,7 +18,16 @@ public class HyperspaceCoordinatesService {
   }
 
   public HyperspaceCoordinates survey(String system, float x, float y, float z) {
-    return new HyperspaceCoordinates(IdUtil.generate(system), new Coordinates(x, y, z).blur());
+    Coordinates coordinates = new Coordinates(x, y, z);
+    float accuracy = Constants.SURVEY_MK3_ACCURACY;
+
+    if (adminMode) {
+      accuracy = Constants.SURVEY_ADMIN_ACCURACY;
+    } else {
+      coordinates.blur();
+    }
+
+    return new HyperspaceCoordinates(IdUtil.generate(system), coordinates, accuracy);
   }
 
   public HyperspaceCoordinates refresh(String string) {
@@ -23,6 +35,10 @@ public class HyperspaceCoordinatesService {
 
     return new HyperspaceCoordinates(hyperspaceCoordinates.getSystem(),
         hyperspaceCoordinates.getCoordinates(), hyperspaceCoordinates.getAccuracy());
+  }
+
+  public void isAdminMode() {
+    adminMode = true;
   }
 
 }

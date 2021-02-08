@@ -53,8 +53,13 @@ public class CommandLineController implements CommandLineRunner {
     Command command = getCommand(arguments);
     HyperspaceCoordinates hyperspaceCoordinates;
 
+    if (arguments.contains(Flags.ADMIN)) {
+      hyperspaceCoordinatesService.isAdminMode();
+    }
+
     switch (command) {
       case SURVEY: {
+
         String system = arguments.pop();
 
         try {
@@ -114,5 +119,6 @@ public class CommandLineController implements CommandLineRunner {
   class Flags {
     static final String COPY = "-copy";
     static final String AUTO = "-auto";
+    static final String ADMIN = "-admin";
   }
 }

@@ -16,6 +16,7 @@ usage: java -jar reverseFLHook.jar <command> <arguments> [<flags>]
 # Flags
     -copy    Places the generated hyperspace coordinates in the clipboard
     -auto    After a 5s delay, types "/setcoords" + the generated hyperspace coordinates as if keys were pressed on the keyboard
+    -admin   Uses admin-level precision when surveying
 
 # Examples
     java -jar reverseFLHook.jar survey ew01 ew01_01_base -auto
