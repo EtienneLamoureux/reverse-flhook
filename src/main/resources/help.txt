@@ -1,4 +1,4 @@
-usage: java -jar reverseFLHook.jar <command> <arguments> [<flags>]
+usage: java -jar reverse-flhook-<version>.jar <command> <arguments> [<flags>]
 
 # Commands
     survey   <system> <base>; Generates hyperspace coordinates (MK3 precision, valid for [28, 35] days)
@@ -19,9 +19,9 @@ usage: java -jar reverseFLHook.jar <command> <arguments> [<flags>]
     -admin   Uses admin-level precision when surveying
 
 # Examples
-    java -jar reverseFLHook.jar survey ew01 ew01_01_base -auto
-    java -jar reverseFLHook.jar survey fp7_system -30937 -3400 -13054
-    java -jar reverseFLHook.jar refresh 16FE3679-B69CDBB3-341841A5-C6AD29C4-DAFAA176-FD8A5201-2DFD9B72 -copy
+    java -jar reverse-flhook.jar survey ew01 ew01_01_base -auto
+    java -jar reverse-flhook.jar survey fp7_system -30937 -3400 -13054
+    java -jar reverse-flhook.jar refresh 16FE3679-B69CDBB3-341841A5-C6AD29C4-DAFAA176-FD8A5201-2DFD9B72 -copy
 
 # License
     BSD 3-Clause License (Revised), Etienne Lamoureux
