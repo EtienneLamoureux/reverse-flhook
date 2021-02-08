@@ -13,12 +13,14 @@ public class HyperspaceCoordinatesService {
   private CoordinatesRepository coordinatesRepository;
 
   public HyperspaceCoordinates survey(String system, String base) {
-    return new HyperspaceCoordinates(IdUtil.generate(system),
-        coordinatesRepository.findOneBySystemAndBase(system, base).blur());
+    return survey(system, coordinatesRepository.findOneBySystemAndBase(system, base));
   }
 
   public HyperspaceCoordinates survey(String system, float x, float y, float z) {
-    Coordinates coordinates = new Coordinates(x, y, z);
+    return survey(system, new Coordinates(x, y, z));
+  }
+
+  HyperspaceCoordinates survey(String system, Coordinates coordinates) {
     float accuracy = Constants.SURVEY_MK3_ACCURACY;
 
     if (adminMode) {
