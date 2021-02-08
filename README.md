@@ -28,7 +28,7 @@ See the [help file](/src/main/resources/help.txt).
 6. Save and close the new file
 7. Open a command prompt
 8. Navigate to the jar location
-9. Run it using `java -jar reverseFLHook-<version>.jar <command> <arguments> [<flags>]`
+9. Run it using `java -jar reverse-flhook-<version>.jar <command> <arguments> [<flags>]`
 
 #### Example
 ```cmd
