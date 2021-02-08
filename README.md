@@ -32,7 +32,7 @@ See the [help file](/src/main/resources/help.txt).
 
 #### Example
 ```cmd
-$ java -jar reverseFLHook-1.3.0.jar survey li01 li01_07_base -auto -copy
+$ java -jar reverse-flhook-1.4.0.jar survey li01 li01_07_base -auto -copy
   ___                                        ___   _      _  _               _
  | _ \  ___  __ __  ___   _ _   ___  ___    | __| | |    | || |  ___   ___  | |__
  |   / / -_) \ V / / -_) | '_| (_-< / -_)   | _|  | |__  | __ | / _ \ / _ \ | / /
