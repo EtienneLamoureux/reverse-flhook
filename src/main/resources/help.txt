@@ -20,7 +20,7 @@ usage: java -jar reverse-flhook-<version>.jar <command> <arguments> [<flags>]
 
 # Examples
     java -jar reverse-flhook.jar survey ew01 ew01_01_base -auto
-    java -jar reverse-flhook.jar survey fp7_system -30937 -3400 -13054
+    java -jar reverse-flhook.jar survey fp7_system 30937 3400 13054
     java -jar reverse-flhook.jar refresh 16FE3679-B69CDBB3-341841A5-C6AD29C4-DAFAA176-FD8A5201-2DFD9B72 -copy
 
 # License
